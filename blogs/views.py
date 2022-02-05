@@ -4,11 +4,11 @@ from blogs.models import Blog,Comment
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework.decorators import APIView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 from blogs.serializers import BlogSerializer,CommentSerializer,RegisterSerializer,LoginSerializer
 
 class UserAPIView(APIView):
-    permission_classes=[IsAuthenticatedOrReadOnly]
+    permission_classes=[IsAuthenticated]
     def get(self,request):
         user= request.user
         serializer= RegisterSerializer(user)
