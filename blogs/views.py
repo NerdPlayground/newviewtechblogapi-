@@ -4,7 +4,15 @@ from blogs.models import Blog,Comment
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework.decorators import APIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from blogs.serializers import BlogSerializer,CommentSerializer,RegisterSerializer,LoginSerializer
+
+class UserAPIView(APIView):
+    permission_classes=[IsAuthenticatedOrReadOnly]
+    def get(self,request):
+        user= request.user
+        serializer= RegisterSerializer(user)
+        return Response({'user':serializer.data},status=status.HTTP_200_OK)
 
 class RegisterAPIView(APIView):
     def post(self,request):
