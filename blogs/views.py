@@ -5,14 +5,14 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework.decorators import APIView
 from rest_framework.permissions import IsAuthenticated
-from blogs.serializers import BlogSerializer,CommentSerializer,RegisterSerializer,LoginSerializer
+from blogs.serializers import BlogSerializer,CommentSerializer,RegisterSerializer,LoginSerializer,UserSerializer
 
 class UserAPIView(APIView):
     permission_classes=[IsAuthenticated]
     def get(self,request):
         user= request.user
-        serializer= RegisterSerializer(user)
-        return Response({'user':serializer.data},status=status.HTTP_200_OK)
+        serializer= UserSerializer(user)
+        return Response(serializer.data,status=status.HTTP_200_OK)
 
 class RegisterAPIView(APIView):
     def post(self,request):
@@ -35,6 +35,9 @@ class LoginAPIView(APIView):
         return Response({"message":"invalid credentials"},status=status.HTTP_401_UNAUTHORIZED)
 
 class BlogAPIView(APIView):
+    def perform_create(self,serializer):
+        serializer.save(owner=self.request.user)
+
     def get(self,request):
         blogs= Blog.objects.all()
         serializer= BlogSerializer(blogs,many=True)

@@ -11,6 +11,7 @@ class Blog(models.Model):
     blog_read_time= models.IntegerField(default=10)
     blog_title= models.CharField(max_length=255)
     blog_content= models.CharField(max_length=255)
+    blog_owner= models.ForeignKey('blogs.User',related_name='blogs',on_delete=models.CASCADE)
 
 class Comment(models.Model):
     comment_created_at= models.DateTimeField(auto_now_add=True)
