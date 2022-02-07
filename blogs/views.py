@@ -35,9 +35,6 @@ class LoginAPIView(APIView):
         return Response({"message":"invalid credentials"},status=status.HTTP_401_UNAUTHORIZED)
 
 class BlogAPIView(APIView):
-    def perform_create(self,serializer):
-        serializer.save(owner=self.request.user)
-
     def get(self,request):
         blogs= Blog.objects.all()
         serializer= BlogSerializer(blogs,many=True)
@@ -47,7 +44,7 @@ class BlogAPIView(APIView):
         data= request.data
         serializer= BlogSerializer(data=data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(blog_owner=self.request.user)
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
