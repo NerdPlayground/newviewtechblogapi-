@@ -14,9 +14,11 @@ class Blog(models.Model):
     blog_owner= models.ForeignKey('blogs.User',related_name='blogs',on_delete=models.CASCADE)
 
 class Comment(models.Model):
+    comment_content= models.CharField(max_length=255)
+    comment_under= models.ForeignKey('blogs.Blog',on_delete=models.CASCADE)
+    comment_owner= models.ForeignKey('blogs.User',on_delete=models.CASCADE)
     comment_created_at= models.DateTimeField(auto_now_add=True)
     comment_updated_at= models.DateTimeField(auto_now=True)
-    comment_content= models.CharField(max_length=255)
 
 class MyUserManager(UserManager):
     def _create_user(self, username, email, password, **extra_fields):
