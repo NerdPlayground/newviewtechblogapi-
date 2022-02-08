@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'blogs',
+    'comments',
+    'authentication',
     'rest_framework_simplejwt',
 ]
 
@@ -102,7 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL= "blogs.User"
+AUTH_USER_MODEL= "authentication.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
