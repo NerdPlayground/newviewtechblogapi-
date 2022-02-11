@@ -1,3 +1,4 @@
+from blogs.models import Blog
 from rest_framework import serializers
 from authentication.models import User
 
@@ -23,6 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
     # class Meta:
     #     model= User
     #     fields= ['username','email','blogs','comments']
+    blogs= serializers.PrimaryKeyRelatedField(many=True,queryset=Blog.objects.all())
     class Meta:
         model= User
-        fields= ['username','email']
+        fields= ['username','email','blogs']

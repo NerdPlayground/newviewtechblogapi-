@@ -6,4 +6,4 @@ class Blog(models.Model):
     blog_content= models.CharField(max_length=255)
     blog_created_at= models.DateTimeField(auto_now_add=True)
     blog_updated_at= models.DateTimeField(auto_now=True)
-    # blog_owner= models.ForeignKey('blogs.User',on_delete=models.CASCADE)
+    blog_owner= models.ForeignKey('authentication.User',related_name='blogs',on_delete=models.CASCADE)
