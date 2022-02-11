@@ -7,6 +7,8 @@ from comments.serializers import CommentSerializer
 from rest_framework.permissions import IsAuthenticated
 
 class CommentAPIView(APIView):
+    permission_classes= [IsAuthenticated]
+
     def get(self,request):
         comments= Comment.objects.all()
         serializer= CommentSerializer(comments,many=True)
@@ -16,13 +18,14 @@ class CommentAPIView(APIView):
         data= request.data
         serializer= CommentSerializer(data=data)
         if serializer.is_valid():
-            # serializer.save(comment_owner=self.request.user)
-            serializer.save()
+            serializer.save(comment_owner=self.request.user)
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
 class CommentDetailAPIView(APIView):
+    permission_classes= [IsAuthenticated]
+
     def get_object(self,pk):
         try:
             return Comment.objects.get(pk=pk)

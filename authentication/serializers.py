@@ -1,4 +1,5 @@
 from blogs.models import Blog
+from comments.models import Comment
 from rest_framework import serializers
 from authentication.models import User
 
@@ -19,12 +20,8 @@ class LoginSerializer(serializers.ModelSerializer):
         read_only_fields= ['token']
 
 class UserSerializer(serializers.ModelSerializer):
-    # blogs= serializers.PrimaryKeyRelatedField(many=True,queryset=Blog.objects.all())
-    # comments= serializers.PrimaryKeyRelatedField(many=True,queryset=Comment.objects.all())
-    # class Meta:
-    #     model= User
-    #     fields= ['username','email','blogs','comments']
     blogs= serializers.PrimaryKeyRelatedField(many=True,queryset=Blog.objects.all())
+    comments= serializers.PrimaryKeyRelatedField(many=True,queryset=Comment.objects.all())
     class Meta:
         model= User
-        fields= ['username','email','blogs']
+        fields= ['username','email','blogs','comments']
